@@ -27,3 +27,7 @@
 *.i*86
 *.x86_64
 *.hex
+
+# Cloud9 IDE - http://c9.io
+.c9revisions
+.c9
