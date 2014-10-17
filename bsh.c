@@ -8,7 +8,6 @@
 #include <readline/history.h>
 #include <wordexp.h>
 
-#define PROMPT "# "
 #define NELEMS(x)  (sizeof(x) / sizeof(x[0]))
 
 const char* BUILT_IN[] = {"","exit","mycd","mypwd"};
@@ -18,6 +17,8 @@ void free_input(char*, wordexp_t*);
 void exec_builtin(int, char*[]);
 void exec_cmd(char*[]);
 int isbuiltin(char*[]);
+
+char* prompt[255];
 
 int main(int argc, char* argv[])
 {
@@ -48,7 +49,13 @@ int main(int argc, char* argv[])
 // holding the parsed command line
 int handle_input(char* input_str, wordexp_t* cmd_argv)
 {
-    if(!(input_str = readline(PROMPT)))     // command input
+    
+    // initializes the prompt
+    getcwd(prompt, 255);
+    strcat(prompt, " # ");
+    
+    
+    if(!(input_str = readline(prompt)))     // command input
     {
         printf("exit\n");
         exit(0);
