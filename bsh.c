@@ -7,6 +7,7 @@
 #include <readline/readline.h>
 #include <readline/history.h>
 #include <wordexp.h>
+#include <signal.h>
 
 #define NELEMS(x)  (sizeof(x) / sizeof(x[0]))
 
@@ -17,6 +18,7 @@ void free_input(char*, wordexp_t*);
 void exec_builtin(int, char*[]);
 void exec_cmd(char*[]);
 int isbuiltin(char*[]);
+void signal_handler(int sig);
 
 char* prompt[255];
 
@@ -25,6 +27,8 @@ int main(int argc, char* argv[])
     char* input_str = NULL;
     int cmd = 0;
     wordexp_t cmd_argv;
+    
+    signal_handler(SIGINT);
     
     while(1)
     {
@@ -149,3 +153,8 @@ int isbuiltin(char* cmd_argv[])
     return 0;
 }
 
+// signal handler
+void signal_handler(int sig)
+{
+    signal( sig, SIG_IGN );
+}
