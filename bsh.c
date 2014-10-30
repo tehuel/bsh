@@ -28,7 +28,7 @@ int main(int argc, char* argv[])
     int cmd = 0;
     wordexp_t cmd_argv;
     
-    signal_handler(SIGINT);
+    signal( SIGINT, SIG_IGN );
     
     while(1)
     {
@@ -151,10 +151,4 @@ int isbuiltin(char* cmd_argv[])
             return i;
     
     return 0;
-}
-
-// signal handler
-void signal_handler(int sig)
-{
-    signal( sig, SIG_IGN );
 }
